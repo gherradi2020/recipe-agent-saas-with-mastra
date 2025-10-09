@@ -1,5 +1,6 @@
 # <YOUR_RECIPE_AGENT_SAAS>
 [![Youtube Walkthrough -- Recipe Agent SaaS](https://img.youtube.com/vi/-mWmIaJ6AJk/0.jpg)](https://youtu.be/-mWmIaJ6AJk)
+[Watch the YouTube Walkthrough](https://youtu.be/-mWmIaJ6AJk)
 
 This open source recipe agent SaaS app for React & NodeJS comes complete with:
 
