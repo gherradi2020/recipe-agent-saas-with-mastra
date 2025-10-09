@@ -3,6 +3,8 @@
 
 [Watch the YouTube Walkthrough](https://youtu.be/-mWmIaJ6AJk)
 
+
+## About
 This open source recipe agent SaaS app for React & NodeJS comes complete with:
 
 - Auth
