@@ -73,6 +73,9 @@ REACT_APP_API_URL=https://api.example.com npm run build
 ```
 
 This generates Wasp first, then bundles the backend and builds the frontend.
+The production script installs Wasp 0.18.0 locally with checksum verification
+when absent; Hostinger can run `npm install` followed by `npm run build` without
+a global Wasp installation. Set `REACT_APP_API_URL` in the build environment.
 The frontend artifact is `.wasp/build/web-app/build`; with runtime configuration
 and PostgreSQL available, `npm start` applies migrations and starts the backend.
 `npm run mastra:dev` is only the Mastra development playground.
