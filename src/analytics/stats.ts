@@ -1,7 +1,7 @@
 import { type DailyStats } from 'wasp/entities';
 import { type DailyStatsJob } from 'wasp/server/jobs';
 import Stripe from 'stripe';
-import { stripe } from '../payment/stripe/stripeClient';
+import { getStripe } from '../payment/stripe/stripeClient';
 import { listOrders } from '@lemonsqueezy/lemonsqueezy.js';
 import { getDailyPageViews, getSources } from './providers/plausibleAnalyticsUtils';
 // import { getDailyPageViews, getSources } from './providers/googleAnalyticsUtils';
@@ -132,6 +132,7 @@ export const calculateDailyStats: DailyStatsJob<never, void> = async (_args, con
 };
 
 async function fetchTotalStripeRevenue() {
+  const stripe = getStripe();
   let totalRevenue = 0;
   let params: Stripe.BalanceTransactionListParams = {
     limit: 100,

@@ -9,10 +9,6 @@ import OpenAI from "openai";
 import { ToolId } from "./ids";
 import { uploadBase64ToS3 } from "../../file-upload/s3Utils";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const inputSchema = z.object({
   recipe: elaboratedRecipeSchema,
   userId: z.string().describe("The user ID for S3 file organization"),
@@ -28,6 +24,7 @@ export type GenerateRecipeThumbnailOutput = z.infer<typeof outputSchema>;
 
 export async function generateThumbnailForRecipe(recipe: ElaboratedRecipe, userId: string) {
   try {
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const output_format: ImageGenerateParams['output_format'] = 'webp';
 
     const imageResponse = await openai.images.generate({

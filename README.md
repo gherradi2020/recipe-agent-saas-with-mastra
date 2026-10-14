@@ -20,6 +20,11 @@ It was built on the [Open SaaS](https://opensaas.sh) template, which is a free, 
 
 ### Running locally
 
+Use Node 22 (at least 22.12) and Wasp 0.18. The application now uses SMTP;
+configure a local SMTP inbox such as Mailpit before testing email authentication.
+OpenAI and Stripe keys are needed only for their integrations, not to build or
+start the application. Do not use example key strings as real credentials.
+
 - Make sure you have [Wasp](https://wasp.sh) installed:
 
 ```bash
@@ -60,3 +65,17 @@ wasp db migrate-dev
 - AWS S3 credentials
 - OpenAI API key
   🤠 See the [Open SaaS docs](https://docs.opensaas.sh) for full instructions and integration guides!
+
+### Production build and Hostinger
+
+```bash
+REACT_APP_API_URL=https://api.example.com npm run build
+```
+
+This generates Wasp first, then bundles the backend and builds the frontend.
+The frontend artifact is `.wasp/build/web-app/build`; with runtime configuration
+and PostgreSQL available, `npm start` applies migrations and starts the backend.
+`npm run mastra:dev` is only the Mastra development playground.
+
+See [the Hostinger deployment guide](docs/hostinger-deployment.md) for topology,
+environment variables, startup commands, local smoke tests and current limits.

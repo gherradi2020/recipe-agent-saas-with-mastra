@@ -6,6 +6,7 @@ import { getCurrentDate } from '../tools/get-current-date';
 import { generateCompleteRecipes } from '../workflow/generate-complete-recipes';
 import { getUserRecipes } from '../tools/get-user-recipes';
 import { AgentId } from './ids';
+import { mastraStorageUrl } from '../storage';
 
 export const recipeOrchestrator = new Agent({
   id: AgentId.RecipeOrchestrator,
@@ -42,10 +43,10 @@ export const recipeOrchestrator = new Agent({
   },
   memory: new Memory({
     storage: new LibSQLStore({
-      url: 'file:../memory.db',
+      url: mastraStorageUrl,
     }),
     vector: new LibSQLVector({
-      connectionUrl: 'file:../memory.db',
+      connectionUrl: mastraStorageUrl,
     }),
     embedder: openai.embedding('text-embedding-3-small'),
     options: {

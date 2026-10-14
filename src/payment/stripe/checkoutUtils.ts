@@ -1,12 +1,13 @@
 import type { StripeMode } from './paymentProcessor';
 
 import Stripe from 'stripe';
-import { stripe } from './stripeClient';
+import { getStripe } from './stripeClient';
 
 // WASP_WEB_CLIENT_URL will be set up by Wasp when deploying to production: https://wasp.sh/docs/deploying
 const DOMAIN = process.env.WASP_WEB_CLIENT_URL || 'http://localhost:3000';
 
 export async function fetchStripeCustomer(customerEmail: string) {
+  const stripe = getStripe();
   let customer: Stripe.Customer;
   try {
     const stripeCustomers = await stripe.customers.list({
@@ -39,6 +40,7 @@ export async function createStripeCheckoutSession({
   customerId,
   mode,
 }: CreateStripeCheckoutSessionParams) {
+  const stripe = getStripe();
   try {
     return await stripe.checkout.sessions.create({
       line_items: [

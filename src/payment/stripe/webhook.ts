@@ -3,7 +3,7 @@ import { type PaymentsWebhook } from 'wasp/server/api';
 import { type PrismaClient } from '@prisma/client';
 import express from 'express';
 import type { Stripe } from 'stripe';
-import { stripe } from './stripeClient';
+import { getStripe } from './stripeClient';
 import { paymentPlans, PaymentPlanId, SubscriptionStatus, type PaymentPlanEffect } from '../plans';
 import { updateUserStripePaymentDetails } from './paymentDetails';
 import { emailSender } from 'wasp/server/email';
@@ -66,7 +66,7 @@ function constructStripeEvent(request: express.Request): Stripe.Event {
     if (!sig) {
       throw new HttpError(400, 'Stripe webhook signature not provided');
     }
-    return stripe.webhooks.constructEvent(request.body, sig, secret);
+    return getStripe().webhooks.constructEvent(request.body, sig, secret);
   } catch (err) {
     throw new HttpError(500, 'Error constructing Stripe webhook event');
   }
@@ -203,7 +203,7 @@ function extractPriceId(
 }
 
 async function getCheckoutLineItemsBySessionId(sessionId: string) {
-  const { line_items } = await stripe.checkout.sessions.retrieve(sessionId, {
+  const { line_items } = await getStripe().checkout.sessions.retrieve(sessionId, {
     expand: ['line_items'],
   });
   if (!line_items) {
